@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import carrImg from "./carr.png";
+import carrImg from "./carr.gif";
 
 function App() {
   const [entradas, setEntradas] = useState([]);
@@ -130,7 +130,7 @@ const styles = {
     paddingRight: 5,
   },
   item: {
-    background: "linear-gradient(90deg, #003366 0%, #004A8D 100%)",
+    background: "linear-gradient(90deg, #01060bff 0%, #010a12ff 100%)",
     borderLeft: "6px solid #F7941D",
     padding: "15px 25px",
     borderRadius: 12,
@@ -141,7 +141,7 @@ const styles = {
     alignItems: "center",
   },
   left: { display: "flex", alignItems: "center", gap: 10 },
-  carImg: { width: 84, height: 50 },
+  carImg: { width: 104, height: 60 },
   time: { fontSize: "0.9rem", color: "#FDC180" },
 };
 
