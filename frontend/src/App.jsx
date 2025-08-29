@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import carrImg from "./carr.gif";
+import senacImg from "./senac10.png";
 
 function App() {
   const [entradas, setEntradas] = useState([]);
@@ -10,6 +11,13 @@ function App() {
     setEntradas(data.filter(ev => ev.entrada));
     setSaidas(data.filter(ev => ev.saida));
   };
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      window.location.reload(); // full reload
+    }, 5_000); // 60s
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_BASE}/api/movimentacao/placas-hoje`)
@@ -39,7 +47,7 @@ function App() {
     wsRef.current.onerror = (e) => console.error("WS error:", e);
 
     return () => {
-      try { wsRef.current?.close(); } catch {}
+      try { wsRef.current?.close(); } catch { }
     };
   }, []);
 
@@ -47,7 +55,8 @@ function App() {
 
   return (
     <div style={styles.page}>
-      <h1 style={styles.title}>Frota Senac</h1>
+       <img src={senacImg} alt="logo" style={styles.Img} />
+      <h1 style={styles.title}>Controle de Frota</h1>
       <div style={styles.containerColunas}>
         {/* Coluna Entradas */}
         <div style={styles.coluna}>
@@ -57,7 +66,12 @@ function App() {
               <li key={idx} style={{ ...styles.item, borderLeft: "20px solid #4CAF50" }}>
                 <div style={styles.left}>
                   <img src={carrImg} alt="Carro" style={styles.carImg} />
-                  <strong>{ev.placa}</strong>
+                  <div>
+                    <strong>{ev.placa}</strong>
+                    <div style={styles.motorista}>
+                      {ev.motorista || "Motorista não cadastrado"}
+                    </div>
+                  </div>
                 </div>
                 <span style={styles.time}>{formatarHora(ev.createdAt)}</span>
               </li>
@@ -73,7 +87,12 @@ function App() {
               <li key={idx} style={{ ...styles.item, borderLeft: "20px solid #F44336" }}>
                 <div style={styles.left}>
                   <img src={carrImg} alt="Carro" style={styles.carImg} />
-                  <strong>{ev.placa}</strong>
+                  <div>
+                    <strong>{ev.placa}</strong>
+                    <div style={styles.motorista}>
+                      {ev.motorista || "Motorista não cadastrado"}
+                    </div>
+                  </div>
                 </div>
                 <span style={styles.time}>{formatarHora(ev.createdAt)}</span>
               </li>
@@ -142,6 +161,7 @@ const styles = {
   },
   left: { display: "flex", alignItems: "center", gap: 10 },
   carImg: { width: 104, height: 60 },
+  Img: { width: 180, height: 90 },
   time: { fontSize: "0.9rem", color: "#FDC180" },
 };
 

@@ -81,23 +81,20 @@ async function connectStream() {
 
           const plate = extractPlate(xml);
           if (plate) {
-            const event = { plate, time: new Date().toISOString() };
-            console.log("📷 Placa detectada:", event);
-            broadcast(event);
-
-            // SALVAR no banco (entrada padrão; ajuste sua lógica de entrada/saída)
-            MovimentacaoVeiculo.create({
+            const event = {
               placa: plate,
               entrada: true,
               saida: false,
-            }).then(() => {
-              console.log("✅ Movimentação salva no SQL Server.");
-            }).catch((err) => {
-              console.error("❌ Erro ao salvar movimentação:", err.message);
-            });
+              createdAt: new Date().toISOString(),
+            };
 
-            // (Opcional) Se preferir usar a rota HTTP interna:
-            // axios.post(`http://localhost:${PORT}/api/movimentacao/registrar`, { placa: plate, tipo: "entrada" });
+            console.log("📷 Placa detectada (entrada):", event);
+            broadcast(event);
+
+            // Salvar no banco
+            MovimentacaoVeiculo.create(event)
+              .then(() => console.log("✅ Movimentação salva no SQL Server."))
+              .catch(err => console.error("❌ Erro ao salvar movimentação:", err.message));
           }
         }
       });
@@ -144,24 +141,22 @@ async function connectStreamSaida() {
 
           const plate = extractPlate(xml);
           if (plate) {
-            const event = { plate, time: new Date().toISOString() };
-            console.log("📷 Placa Saida detectada:", event);
-            broadcast(event);
-
-            // SALVAR no banco (entrada padrão; ajuste sua lógica de entrada/saída)
-            MovimentacaoVeiculo.create({
+            const event = {
               placa: plate,
               entrada: false,
               saida: true,
-            }).then(() => {
-              console.log("✅ Movimentação de saida salva no SQL Server.");
-            }).catch((err) => {
-              console.error("❌ Erro ao salvar movimentação:", err.message);
-            });
+              createdAt: new Date().toISOString(),
+            };
 
-            // (Opcional) Se preferir usar a rota HTTP interna:
-            // axios.post(`http://localhost:${PORT}/api/movimentacao/registrar`, { placa: plate, tipo: "entrada" });
+            console.log("📷 Placa detectada (saída):", event);
+            broadcast(event);
+
+            // Salvar no banco
+            MovimentacaoVeiculo.create(event)
+              .then(() => console.log("✅ Movimentação de saída salva no SQL Server."))
+              .catch(err => console.error("❌ Erro ao salvar movimentação:", err.message));
           }
+
         }
       });
 
