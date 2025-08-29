@@ -54,7 +54,7 @@ function App() {
           <h2 style={styles.subtitle}>Entradas</h2>
           <ul style={styles.list}>
             {entradas.map((ev, idx) => (
-              <li key={idx} style={{ ...styles.item, borderLeft: "6px solid #4CAF50" }}>
+              <li key={idx} style={{ ...styles.item, borderLeft: "20px solid #4CAF50" }}>
                 <div style={styles.left}>
                   <img src={carrImg} alt="Carro" style={styles.carImg} />
                   <strong>{ev.placa}</strong>
@@ -70,7 +70,7 @@ function App() {
           <h2 style={styles.subtitle}>Saídas</h2>
           <ul style={styles.list}>
             {saidas.map((ev, idx) => (
-              <li key={idx} style={{ ...styles.item, borderLeft: "6px solid #F44336" }}>
+              <li key={idx} style={{ ...styles.item, borderLeft: "20px solid #F44336" }}>
                 <div style={styles.left}>
                   <img src={carrImg} alt="Carro" style={styles.carImg} />
                   <strong>{ev.placa}</strong>
