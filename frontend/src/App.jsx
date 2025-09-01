@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const id = setInterval(() => {
       window.location.reload(); // full reload
-    }, 5_000); // 60s
+    }, 30_000); // 60s
     return () => clearInterval(id);
   }, []);
 
